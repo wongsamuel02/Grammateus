@@ -1,1 +1,2 @@
 # Grammateus
+Grammateus is an innovative AI-powered "Bedside Assistant" designed to streamline the administrative workflows in healthcare settings. By leveraging advanced speech recognition and natural language processing technologies, Grammateus transcribes, interprets, and summarizes patient-doctor interactions in real-time, significantly reducing the time and effort healthcare professionals spend on documentation.
