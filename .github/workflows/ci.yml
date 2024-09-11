@@ -25,12 +25,12 @@ jobs:
 
     # Install dependencies
     - name: Install dependencies
-      working-directory: ./Grammateus/Grammateus/frontend
+      working-directory: frontend
       run: npm install
 
     # Run tests
     - name: Run tests
-      working-directory: ./Grammateus/Grammateus/frontend
+      working-directory: frontend
       run: npm test
 
     # Build Docker image
