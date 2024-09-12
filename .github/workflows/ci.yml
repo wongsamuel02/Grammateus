@@ -1,0 +1,46 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Check out the code from repository
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Set up Node.js env
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    # Install dependencies
+    - name: Install dependencies
+      working-directory: frontend
+      run: npm install
+
+    # Run tests
+    - name: Run tests
+      working-directory: frontend
+      run: npm test
+
+    # Build Docker image
+    # - name: Build Docker image
+    #   run: docker build -t grammateus-app .
+
+    # Push Docker image
+    # - name: Push Docker image
+    #   run: docker push patelpar000/grammateus-app:tagname
+
+    # If build completes
+    - name: Notify team
+      run: echo "Build completed!"
