@@ -7,8 +7,13 @@ WORKDIR /app
 # Copy the package.json and package-lock.json files
 COPY package*.json ./
 
-# Install the project dependencies
-RUN npm install
+COPY frontend_install_dependencies.sh ./
+RUN chmod +x frontend_install_dependencies.sh
+
+# Run the install script
+RUN ./frontend_install_dependencies.sh
+
+
 
 # Expose the app port
 EXPOSE 3000
