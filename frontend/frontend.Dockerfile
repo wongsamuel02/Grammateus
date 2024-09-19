@@ -9,6 +9,8 @@ COPY package*.json ./
 
 # Install the project dependencies
 RUN npm install
+RUN npm i react-router-dom@6.26.2
+
 
 # Expose the app port
 EXPOSE 3000
