@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Copy the rest of the application code
-COPY . .
+
+COPY backend_install_dependencies.sh ./
 
 RUN chmod +x backend_install_dependencies.sh
 
@@ -17,3 +17,6 @@ RUN ./backend_install_dependencies.sh
 
 # Expose the port on which the app will run
 EXPOSE 8000
+
+
+
