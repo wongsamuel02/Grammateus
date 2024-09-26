@@ -1,4 +1,3 @@
-version: '3'
 services:
   frontend:
     build:
@@ -13,6 +12,22 @@ services:
     command: npm start
     networks:
       - grammateus-network
+    depends_on:
+      - backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: node app.js
+    networks:
+      - grammateus-network
+    env_file:
+      - ./backend/.env
 
 networks:
   grammateus-network:
