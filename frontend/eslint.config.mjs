@@ -8,8 +8,8 @@ export default [
     languageOptions: { 
       globals: { 
         ...globals.browser, 
-        ...globals.node,
-        ...globals.jest  // Add Jest globals (test, expect)
+        ...globals.node, 
+        ...globals.jest // Adding Jest globals
       } 
     },
   },
@@ -18,8 +18,11 @@ export default [
   {
     settings: {
       react: {
-        version: "detect"  // Automatically detect the React version
-      }
-    }
+        version: "detect",  // Automatically detect the React version
+      },
+    },
+    rules: {
+      "react/react-in-jsx-scope": "off",  // Turn off the rule that requires React in scope
+    },
   },
 ];
