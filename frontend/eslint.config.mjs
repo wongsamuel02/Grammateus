@@ -6,7 +6,11 @@ export default [
   { files: ["**/*.{js,mjs,cjs,jsx}"] },
   { 
     languageOptions: { 
-      globals: { ...globals.browser, ...globals.node } 
+      globals: { 
+        ...globals.browser, 
+        ...globals.node,
+        ...globals.jest  // Add Jest globals (test, expect)
+      } 
     },
   },
   pluginJs.configs.recommended,
