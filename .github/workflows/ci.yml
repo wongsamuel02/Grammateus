@@ -30,6 +30,11 @@ jobs:
           chmod +x ../frontend/frontend_install_dependencies.sh
           ../frontend/frontend_install_dependencies.sh
 
+    # Run ESLin
+    - name: Run ESLint
+      working-directory: frontend
+      run: npx eslint ./src
+
     # Run tests
     - name: Run tests
       working-directory: frontend
