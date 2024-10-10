@@ -21,9 +21,10 @@ export default function LoginForm() {
     return(
         <form onSubmit={handleSubmit}>
             <div>
-                <label>Username:</label>
+                <label htmlFor="username">Username:</label>
                 <input
                     type="Text"
+                    id="username"
                     value={username}
                     onChange={handleUsernameChange}
                     placeholder="Enter your username"
@@ -31,9 +32,10 @@ export default function LoginForm() {
                 />
             </div>
             <div>
-                <label>Password:</label>
+                <label htmlFor="password">Password:</label>
                 <input
                     type="password"
+                    id="password"
                     value={password}
                     onChange={handlePasswordChange}
                     placeholder="Enter your password"
