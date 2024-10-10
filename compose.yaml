@@ -9,11 +9,11 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    command: npm start
     networks:
       - grammateus-network
     depends_on:
       - backend
+    command: npm start
   backend:
     build:
       context: ./backend
