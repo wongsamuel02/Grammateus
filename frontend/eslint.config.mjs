@@ -23,6 +23,7 @@ export default [
     },
     rules: {
       "react/react-in-jsx-scope": "off",  // Turn off the rule that requires React in scope
+      "react/no-unescaped-entities": "off",  // Disable the rule enforcing escaped entities in JSX
     },
   },
 ];
