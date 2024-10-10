@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SpeechRecognition from 'react-speech-recognition';
+import PropTypes from 'prop-types';
 
 const Dictaphone = ({ transcript, listening, resetTranscript }) => {
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -63,6 +64,12 @@ const Dictaphone = ({ transcript, listening, resetTranscript }) => {
       <p>Listening Time: {displayTime}</p>
     </div>
   );
+};
+
+Dictaphone.propTypes = {
+  transcript: PropTypes.string.isRequired,    // Define that transcript is a string and required
+  listening: PropTypes.bool.isRequired,       // Define that listening is a boolean and required
+  resetTranscript: PropTypes.func.isRequired, // Define that resetTranscript is a function and required
 };
 
 export default Dictaphone;
