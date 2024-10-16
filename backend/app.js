@@ -1,11 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser')
 require('dotenv').config();
-const OpenAI = require('openai');
 
 // Express setup
 const app = express();
@@ -35,6 +33,7 @@ const connectToMongoDB = require('./database');
 app.use('/', require('./routes/root'))
 app.use('/auth', require('./routes/auth'))
 app.use('/reigster', require('./routes/register'))
+app.use('/generate', require('./routes/generate'));
 
 // Restricted Routes
 app.use(verifyJWT)
