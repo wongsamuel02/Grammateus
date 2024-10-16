@@ -12,4 +12,8 @@ export const AuthProvider = ({ children }) => {
     )
 }
 
+MyComponent.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
 export default AuthContext;
