@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser')
 require('dotenv').config();
+const OpenAI = require('openai');
 
 // Express setup
 const app = express();
@@ -38,6 +40,7 @@ app.use('/reigster', require('./routes/register'))
 app.use(verifyJWT)
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+const PORT = 8000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
