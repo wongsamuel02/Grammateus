@@ -10,4 +10,3 @@ npm install jsonwebtoken@9.0.2
 npm install cors@2.8.5
 npm install bcrypt@5.1.1
 npm install cookie-parser@1.4.7
-npm install nodemon@3.1.7

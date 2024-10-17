@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
-import SpeechRecognition from 'react-speech-recognition';
-import PropTypes from 'prop-types';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import axios from '../api/axios';
 
-const Dictaphone = ({ transcript, listening, resetTranscript }) => {
+const Dictaphone = () => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
+  const [summarizedTranscript, setSummarizedTranscript] = useState('')
+  const [error, setError] = useState('');
+
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+
 
   const startListening = () => {
     if (!listening && !intervalId) {
@@ -20,6 +34,7 @@ const Dictaphone = ({ transcript, listening, resetTranscript }) => {
     // Stop listening and stop the timer
     const stopListening = () => {
       SpeechRecognition.stopListening();
+      summarizeNotes(transcript)
       clearInterval(intervalId); 
       setIntervalId(null);
     };
@@ -54,8 +69,25 @@ const Dictaphone = ({ transcript, listening, resetTranscript }) => {
 
   const displayTime = formatTime((elapsedTime / 1000).toFixed(0));
 
+  const summarizeNotes = async (originalText) => {
+    if (!originalText.trim()) { // trim() removes whitespace from both ends
+      return
+    }
+
+    try {
+      const response = await axios.post('/gpt', { originalText });
+      const { PatientNotes } = response.data;
+      setSummarizedTranscript(PatientNotes);
+      setError('');
+    } catch {
+      setError(error.message);
+    }
+  }
+
   return (
     <div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <p>{summarizedTranscript}</p>
       <p>Microphone: {listening ? 'on' : 'off'}</p>
       <button onClick={startListening}>Start</button>
       <button onClick={stopListening}>Stop</button>
@@ -64,12 +96,6 @@ const Dictaphone = ({ transcript, listening, resetTranscript }) => {
       <p>Listening Time: {displayTime}</p>
     </div>
   );
-};
-
-Dictaphone.propTypes = {
-  transcript: PropTypes.string.isRequired,    // Define that transcript is a string and required
-  listening: PropTypes.bool.isRequired,       // Define that listening is a boolean and required
-  resetTranscript: PropTypes.func.isRequired, // Define that resetTranscript is a function and required
 };
 
 export default Dictaphone;
