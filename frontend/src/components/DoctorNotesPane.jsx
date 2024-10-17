@@ -114,13 +114,13 @@ function DoctorNotesPane() {
   
   return (
     <div className="doctor-notes-pane">
-      <div style={{ width: '50%', display: 'flex', justifyContent: 'space-between' }}>
-        <SearchBar />
-        <div style={{ textAlign: 'right' }}>
-          <button onClick={generate}>Generate</button>
-          <button onClick={startListening}>Start</button>
-          <button onClick={stopListening}>Stop</button>
-          <button onClick={resetEverything}>Reset</button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2%' }}>
+        <SearchBar style={{width: '100%', alignItems: 'center'}} />
+        <div style={{ marginLeft: 'auto', display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+          <button className="btn btn-primary mx-2" onClick={generate}>Generate</button>
+          <button className="btn btn-success mx-2" onClick={startListening}>Start</button>
+          <button className="btn btn-danger mx-2" onClick={stopListening}>Stop</button>
+          <button className="btn btn-warning mx-2" onClick={resetEverything}>Reset</button>
         </div>
       </div>
       <h2 className="mb-3">Doctor's Notes</h2>
