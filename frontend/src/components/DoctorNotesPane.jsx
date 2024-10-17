@@ -19,11 +19,11 @@ function DoctorNotesPane() {
   } = useSpeechRecognition();
   
   // State for dynamic card data
-  const [cardsData] = useState([
-    { title: "Subjective", text: "This is subjective note 1" },
-    { title: "Objective", text: "This is subjective note 2" },
-    { title: "Assessment", text: "This is subjective note 3" },
-    { title: "Plan", text: "This is subjective note 4" }
+  const [cardsData, setCardsData] = useState([
+    { title: "Subjective", text: ["This is subjective note 1", "test"] },
+    { title: "Objective", text: ["This is subjective note 2"] },
+    { title: "Assessment", text: ["This is subjective note 3"] },
+    { title: "Plan", text: ["This is subjective note 4"] }
   ]);
 
   if (!browserSupportsSpeechRecognition) {
@@ -96,6 +96,15 @@ function DoctorNotesPane() {
 
         // Do something with PatientNotes
 
+        const updatedCardsData = [
+            { title: "Subjective", text: PatientNotes.subjective },
+            { title: "Objective", text: PatientNotes.objective },
+            { title: "Assessment", text: PatientNotes.assessment },
+            { title: "Plan", text: PatientNotes.plan }
+          ];
+
+        setCardsData(updatedCardsData);
+
         setError('');
     } catch (error) {
         console.error('Error fetching data:', error.message);
@@ -125,20 +134,28 @@ function DoctorNotesPane() {
         </Card>
 
       {/* Map over cardsData to render the cards */}
-      <Row>
+        <Row>
         {cardsData.map((card, index) => (
-          <Col md={6} key={index}>
+            <Col md={6} key={index}>
             <Card className="mb-3">
-              <Card.Body>
+                <Card.Body>
                 <Card.Title>{card.title}</Card.Title>
                 <Card.Text>
-                  <p>{card.text}</p>
+                    {Array.isArray(card.text) ? (
+                    <ul>
+                        {card.text.map((item, idx) => (
+                        <li key={idx}>{item}</li>
+                        ))}
+                    </ul>
+                    ) : (
+                    <p>{card.text}</p>
+                    )}
                 </Card.Text>
-              </Card.Body>
+                </Card.Body>
             </Card>
-          </Col>
+            </Col>
         ))}
-      </Row>
+        </Row>
     </div>
   );
 }

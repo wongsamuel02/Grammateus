@@ -5,11 +5,10 @@ const router = express.Router();
 
 function parseMedicalRecord(input) {
     const sections = {
-        original: input,
-        subjective: "",
-        objective: "",
-        assessment: "",
-        plan: ""
+        subjective: [],
+        objective: [],
+        assessment: [],
+        plan: []
     };
 
     // Trim input and replace newline characters for easier parsing
@@ -27,15 +26,22 @@ function parseMedicalRecord(input) {
     const assessmentMatch = cleanedInput.match(assessmentRegex);
     const planMatch = cleanedInput.match(planRegex);
 
-    // Assign the matched values to the corresponding sections
-    if (subjectiveMatch) sections.subjective = subjectiveMatch[1].trim();
-    if (objectiveMatch) sections.objective = objectiveMatch[1].trim();
-    if (assessmentMatch) sections.assessment = assessmentMatch[1].trim();
-    if (planMatch) sections.plan = planMatch[1].trim();
+    // Helper function to convert the matched string into a list by splitting on '-'
+    const convertToList = (section) => {
+        return section
+            .split('-') // Split by the newline
+            .map(item => item.trim()) // Trim each list item
+            .filter(item => item.length > 0); // Filter out empty strings
+    };
+
+    // Assign the matched values to the corresponding sections, converting them into lists
+    if (subjectiveMatch) sections.subjective = convertToList(subjectiveMatch[1]);
+    if (objectiveMatch) sections.objective = convertToList(objectiveMatch[1]);
+    if (assessmentMatch) sections.assessment = convertToList(assessmentMatch[1]);
+    if (planMatch) sections.plan = convertToList(planMatch[1]);
 
     return sections;
 }
-
 // POST route to get patient notes from OpenAI
 router.post('/', async (req, res) => {
     try {
