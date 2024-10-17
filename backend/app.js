@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser')
 require('dotenv').config();
-const OpenAI = require('openai');
 
 // Express setup
 const app = express();
@@ -30,10 +29,11 @@ connectToMongoDB();
 
 // routes
 app.use('/', require('./routes/root'))
-app.use('/rester', require('./routes/register'))
+app.use('/register', require('./routes/register'))
 app.use('/auth', require('./routes/auth'))
 app.use('/refresh', require('./routes/refresh'))
 app.use('/logout', require('./routes/logout'))
+app.use('/gpt', require('./routes/generate'))
 
 // Restricted Routes
 app.use(verifyJWT)
