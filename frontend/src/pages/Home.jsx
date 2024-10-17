@@ -25,7 +25,7 @@ function HomePage() {
         <Panel className="panel-content">
           <PanelGroup direction="vertical">
             {/* Top Panel */}
-            <Panel defaultSize={70} className="panel-content">
+            <Panel defaultSize={80} className="panel-content">
               <div className="panel-inner bg-white rounded">
               <DoctorNotesPane />
               </div>
