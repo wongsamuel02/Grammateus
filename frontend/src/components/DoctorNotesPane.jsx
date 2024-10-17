@@ -3,7 +3,7 @@ import { Card, Row, Col } from 'react-bootstrap';
 import SearchBar from './SearchBar';
 
 function DoctorNotesPane() {
-  const [doctorNotes] = useState("Doctor's notes will be displayed after the doctor-patient conversation has ended.");
+    //const [doctorNotes] = useState("Doctor's notes will be displayed after the doctor-patient conversation has ended.");
 
   // State for dynamic card data
   const [cardsData] = useState([
