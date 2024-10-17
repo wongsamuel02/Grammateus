@@ -7,8 +7,8 @@ const useLogout = () => {
     const logout = async () => {
         setAuth({});
         try {
-            const response = await axios('/logout', {
-                withCredentials: true
+            await axios('/logout', {
+                withCredentials: true // Ensure cookies are sent with the request
             });
         } catch (err) {
             console.error(err);
