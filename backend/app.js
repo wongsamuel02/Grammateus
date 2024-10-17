@@ -32,7 +32,7 @@ const connectToMongoDB = require('./database');
 // routes
 app.use('/', require('./routes/root'))
 app.use('/auth', require('./routes/auth'))
-app.use('/reigster', require('./routes/register'))
+app.use('/register', require('./routes/register'))
 app.use('/generate', require('./routes/generate'));
 
 // Restricted Routes
