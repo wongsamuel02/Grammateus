@@ -20,10 +20,10 @@ function DoctorNotesPane() {
   
   // State for dynamic card data
   const [cardsData, setCardsData] = useState([
-    { title: "Subjective", text: ["This is subjective note 1", "test"] },
-    { title: "Objective", text: ["This is subjective note 2"] },
-    { title: "Assessment", text: ["This is subjective note 3"] },
-    { title: "Plan", text: ["This is subjective note 4"] }
+    { title: "Subjective", text: ["This is subjective note 1"] },
+    { title: "Objective", text: ["This is objective note 1"] },
+    { title: "Assessment", text: ["This is assessment note 1"] },
+    { title: "Plan", text: ["This is plan note 1"] }
   ]);
 
   if (!browserSupportsSpeechRecognition) {
@@ -92,16 +92,17 @@ function DoctorNotesPane() {
 
     try {
         const response = await axios.post('/gpt', { originalText });
-        const { PatientNotes } = response.data;
-
+        const { parsedRecord } = response.data;
+        console.log(parsedRecord)
         // Do something with PatientNotes
 
         const updatedCardsData = [
-            { title: "Subjective", text: PatientNotes.subjective },
-            { title: "Objective", text: PatientNotes.objective },
-            { title: "Assessment", text: PatientNotes.assessment },
-            { title: "Plan", text: PatientNotes.plan }
+            { title: "Subjective", text: parsedRecord.subjective },
+            { title: "Objective", text: parsedRecord.objective },
+            { title: "Assessment", text: parsedRecord.assessment },
+            { title: "Plan", text: parsedRecord.plan }
           ];
+          console.log(updatedCardsData)
 
         setCardsData(updatedCardsData);
 
