@@ -20,26 +20,25 @@ app.use(express.json({
         }
     }
 }));
-
 app.use(cors());
-
 app.use(cookieParser());
 
 // DB setup
 const connectToMongoDB = require('./database');
-// connectToMongoDB();
+connectToMongoDB();
 
 // routes
 app.use('/', require('./routes/root'))
-app.use('/auth', require('./routes/auth'))
 app.use('/register', require('./routes/register'))
-app.use('/generate', require('./routes/generate'));
+app.use('/auth', require('./routes/auth'))
+app.use('/refresh', require('./routes/refresh'))
+app.use('/logout', require('./routes/logout'))
+app.use('/gpt', require('./routes/generate'))
 
 // Restricted Routes
 app.use(verifyJWT)
 
 // Start the server
-const PORT = 8000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });

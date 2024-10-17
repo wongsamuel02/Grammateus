@@ -1,35 +1,38 @@
 const bcrypt = require('bcrypt')
+const Users = require('../model/Users')
 const { generateAccessToken, generateRefreshToken } = require('../utils/generateJWT');
-
-// Test db
-const usersDB = [
-    { email: "testuser@gmail.com", password: "testpass"}
-];
-//
 
 const authenticateUser = async (req, res) => {
     const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ 'message': 'Email and password are required.' });
     console.log(`email: ${email}, Password: ${password}`)
 
-    if (!email || !password) return res.status(400).json({ 'message': 'Email and password are required.' });
-    const foundUser = usersDB.find(u => u.email === email);
-
+    const foundUser = await Users.findOne({ email: email }).exec();
     if (!foundUser) return res.sendStatus(401) // Unauthorized
 
     // evaulate password
-    // const match = await bcrypt.compare(pwd,  foundUser.password)
-    const match = foundUser.password === password
+    const match = await bcrypt.compare(password, foundUser.password)
     if (!match) return res.sendStatus(401);
 
     // Create JWTs
-    const accessToken = generateAccessToken(foundUser)
-    const refreshToken = generateRefreshToken(foundUser)
+    const roles = Object.values(foundUser.roles).filter(Boolean);
+    const accessTokenInfo = {
+        "UserInfo": {
+            "email": foundUser.email,
+            "roles": roles
+        }
+    };
+    const accessToken = generateAccessToken(accessTokenInfo);
+    
+    const refreshTokenInfo = { "email": foundUser.email };
+    const refreshToken = generateRefreshToken(refreshTokenInfo)
 
     // Saving refreshToken with current user to DB
-    const otherUsers = usersDB.filter(person => person.email != foundUser.email)
-    const currentUser = { ...foundUser, refreshToken };
+    foundUser.refreshToken = refreshToken;
+    const result = await foundUser.save();
 
-    res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
+    // send refreshToken with http-only
+    res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
     return res.status(200).json({ 'success': `User ${email} is logged in`, 'accessToken': accessToken})
 }
 
