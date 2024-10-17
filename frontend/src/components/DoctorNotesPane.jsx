@@ -19,6 +19,14 @@ function DoctorNotesPane() {
         <SearchBar />
       </div>
       <h2 className="mb-3">Doctor's Notes</h2>
+      <Card className="mb-3">
+        <Card.Body>
+            <Card.Title>Trnascription</Card.Title>
+            <Card.Text>
+                <p>Live Transcription here</p>
+            </Card.Text>
+            </Card.Body>
+        </Card>
 
       {/* Map over cardsData to render the cards */}
       <Row>
