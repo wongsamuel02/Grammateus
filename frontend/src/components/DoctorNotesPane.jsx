@@ -63,25 +63,25 @@ function DoctorNotesPane() {
       setIntervalId(null);
   }
 
-  function formatTime(seconds) {
-    const days = Math.floor(seconds / (24 * 60 * 60));
-    seconds %= (24 * 60 * 60);
+  // function formatTime(seconds) {
+  //   const days = Math.floor(seconds / (24 * 60 * 60));
+  //   seconds %= (24 * 60 * 60);
 
-    const hours = Math.floor(seconds / (60 * 60));
-    seconds %= (60 * 60);
+  //   const hours = Math.floor(seconds / (60 * 60));
+  //   seconds %= (60 * 60);
 
-    const minutes = Math.floor(seconds / 60);
-    seconds %= 60;
+  //   const minutes = Math.floor(seconds / 60);
+  //   seconds %= 60;
 
-    let result = "";
+  //   let result = "";
 
-    if (days > 0) result += `${days}d `;
-    if (hours > 0) result += `${hours}h `;
-    if (minutes > 0) result += `${minutes}m `;
-    result += `${seconds}s`;
+  //   if (days > 0) result += `${days}d `;
+  //   if (hours > 0) result += `${hours}h `;
+  //   if (minutes > 0) result += `${minutes}m `;
+  //   result += `${seconds}s`;
 
-    return result.trim();
-  }
+  //   return result.trim();
+  // }
 
   // const displayTime = formatTime((elapsedTime / 1000).toFixed(0));
 
@@ -91,15 +91,16 @@ function DoctorNotesPane() {
     }
 
     try {
-        const response = await axios.post('/gpt', { originalText });
+      console.log("/gpt'")
+        // const response = await axios.post('/gpt', { originalText });
         // const { PatientNotes } = response.data;
 
         // Do something with PatientNotes
 
-        setError('');
+        // setError('');
     } catch (error) {
         console.error('Error fetching data:', error.message);
-        setError(error.message);
+        // setError(error.message);
     }
   };
   
