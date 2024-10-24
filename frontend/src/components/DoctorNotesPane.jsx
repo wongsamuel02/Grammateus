@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import SearchBar from './SearchBar';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import axios from '../api/axios';
+//import axios from '../api/axios';
 
 function DoctorNotesPane() {
   //const [doctorNotes] = useState("Doctor's notes will be displayed after the doctor-patient conversation has ended.");
