@@ -9,7 +9,7 @@ function DoctorNotesPane() {
   
   const [elapsedTime, setElapsedTime] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
   
   const {
     transcript,
@@ -83,7 +83,7 @@ function DoctorNotesPane() {
     return result.trim();
   }
 
-  const displayTime = formatTime((elapsedTime / 1000).toFixed(0));
+  // const displayTime = formatTime((elapsedTime / 1000).toFixed(0));
 
   const summarizeNotes = async (originalText) => {
     if (!originalText.trim()) {
@@ -92,7 +92,7 @@ function DoctorNotesPane() {
 
     try {
         const response = await axios.post('/gpt', { originalText });
-        const { PatientNotes } = response.data;
+        // const { PatientNotes } = response.data;
 
         // Do something with PatientNotes
 
