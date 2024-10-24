@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import SearchBar from './SearchBar';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import axios from '../api/axios';
+//import axios from '../api/axios';
 
 function DoctorNotesPane() {
   //const [doctorNotes] = useState("Doctor's notes will be displayed after the doctor-patient conversation has ended.");
   
   const [elapsedTime, setElapsedTime] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
   
   const {
     transcript,
@@ -63,27 +63,27 @@ function DoctorNotesPane() {
       setIntervalId(null);
   }
 
-  function formatTime(seconds) {
-    const days = Math.floor(seconds / (24 * 60 * 60));
-    seconds %= (24 * 60 * 60);
+  // function formatTime(seconds) {
+  //   const days = Math.floor(seconds / (24 * 60 * 60));
+  //   seconds %= (24 * 60 * 60);
 
-    const hours = Math.floor(seconds / (60 * 60));
-    seconds %= (60 * 60);
+  //   const hours = Math.floor(seconds / (60 * 60));
+  //   seconds %= (60 * 60);
 
-    const minutes = Math.floor(seconds / 60);
-    seconds %= 60;
+  //   const minutes = Math.floor(seconds / 60);
+  //   seconds %= 60;
 
-    let result = "";
+  //   let result = "";
 
-    if (days > 0) result += `${days}d `;
-    if (hours > 0) result += `${hours}h `;
-    if (minutes > 0) result += `${minutes}m `;
-    result += `${seconds}s`;
+  //   if (days > 0) result += `${days}d `;
+  //   if (hours > 0) result += `${hours}h `;
+  //   if (minutes > 0) result += `${minutes}m `;
+  //   result += `${seconds}s`;
 
-    return result.trim();
-  }
+  //   return result.trim();
+  // }
 
-  const displayTime = formatTime((elapsedTime / 1000).toFixed(0));
+  // const displayTime = formatTime((elapsedTime / 1000).toFixed(0));
 
   const summarizeNotes = async (originalText) => {
     if (!originalText.trim()) {
@@ -105,10 +105,10 @@ function DoctorNotesPane() {
 
         setCardsData(updatedCardsData);
 
-        setError('');
+        // setError('');
     } catch (error) {
         console.error('Error fetching data:', error.message);
-        setError(error.message);
+        // setError(error.message);
     }
   };
   
