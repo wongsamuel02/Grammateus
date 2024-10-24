@@ -23,7 +23,7 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
-    command: node app.js
+    command: npx nodemon --legacy-watch app.js
     networks:
       - grammateus-network
     env_file:
