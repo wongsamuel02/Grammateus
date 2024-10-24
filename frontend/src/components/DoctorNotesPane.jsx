@@ -94,7 +94,6 @@ function DoctorNotesPane() {
         const response = await axios.post('/gpt', { originalText });
         const { parsedRecord } = response.data;
         console.log(parsedRecord)
-        // Do something with PatientNotes
 
         const updatedCardsData = [
             { title: "Subjective", text: parsedRecord.subjective },
