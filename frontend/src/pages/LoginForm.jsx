@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { axiosPrivate } from '../api/axios';
 
-import axios from '../api/axios';
 const LOGIN_URL = '/auth';
 
 export default function LoginForm() {
@@ -21,19 +21,17 @@ export default function LoginForm() {
         e.preventDefault();
 
         try {
-            const response = await axios.post(LOGIN_URL,
+            const response = await axiosPrivate.post(LOGIN_URL,
                 {
                     'email': email,
                     'password': password
-                }, 
+                }
             )
-            console.log(JSON.stringify(response?.data));
 
             const accessToken = response?.data?.accessToken;
             setAuth({ email, password, accessToken })
             setEmail('');
             setPassword('');
-            console.log("Navigating from:", from);
             navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {
@@ -86,9 +84,6 @@ export default function LoginForm() {
                         />
                     </div>
                     <button type="submit" className="btn btn-primary w-100">Login</button>
-                    <div className="mt-3 text-center">
-                        <p>Don't have an account? <Link to="/register">Sign up</Link></p>
-                    </div>
                 </form>
             </div>
         </div>
