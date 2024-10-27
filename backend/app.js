@@ -56,10 +56,11 @@ app.use('/auth', require('./routes/auth'))
 app.use('/refresh', require('./routes/refresh'))
 app.use('/logout', require('./routes/logout'))
 app.use('/gpt', require('./routes/generate'))
-app.use('/logout', require('./routes/logout'))
 
 // Restricted Routes
 app.use(verifyJWT)
+app.use('/logout', require('./routes/logout'))
+app.use('/isVerified', require('./routes/verified'))
 
 // Start the server
 app.listen(port, () => {
