@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service  # or backend-service
+spec:
+  selector:
+    app: frontend  # Ensure this matches the label of your frontend pod
+  type: LoadBalancer  # Set the service type to LoadBalancer
+  ports:
+    - port: 80  # Port to expose externally
+      targetPort: 3000  # Port on the container (adjust to match your container port)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend  # Ensure this matches the label of your backend pod
+  type: LoadBalancer
+  ports:
+    - port: 80  # Port to expose externally
+      targetPort: 8000  # Port on the container
+      
