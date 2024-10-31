@@ -6,6 +6,7 @@ import '../App.css'; // Import custom CSS for additional styling
 import PatientTranscriptionPane from '../components/PatientTranscriptionPane';
 import DoctorNotesPane from '../components/DoctorNotesPane';
 import PastHistoryPane from '../components/PastHistoryPane';
+import LogoutButton from '../components/LogoutButton';
 
 function HomePage() {
   return (
@@ -28,6 +29,7 @@ function HomePage() {
             <Panel defaultSize={80} className="panel-content">
               <div className="panel-inner bg-white rounded">
               <DoctorNotesPane />
+              <LogoutButton />
               </div>
             </Panel>
 
