@@ -13,23 +13,7 @@ spec:
         app: backend
     spec:
       containers:
-        - name: backend
-          image: gcr.io/grammateus-cluster/grammateus-backend:latest
-          ports:
-            - containerPort: 8000
-          envFrom:
-            - configMapRef:
-                name: backend-config
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend-service
-spec:
-  selector:
-    app: backend
-  ports:
-    - protocol: TCP
-      port: 8000
-      targetPort: 8000
-  type: ClusterIP
+      - name: backend
+        image: gcr.io/grammateus-cluster/backend:latest
+        ports:
+        - containerPort: 8000
