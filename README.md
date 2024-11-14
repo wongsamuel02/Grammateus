@@ -27,3 +27,19 @@ Grammateus is an innovative AI-powered web application designed to reduce the ad
    git clone https://github.com/yourusername/Grammateus.git
    cd Grammateus
 
+2. Set up environment variables by creating a .env file with necessary API keys.
+3. Build and run with Docker:
+   ```bash
+   docker-compose up
+
+## Deployment
+### Our project is deployed on Google Cloud Platform using Kubernetes (GKE):
+- Transcribe patient-doctor interactions using Google Speech-to-Text.
+- Summarize conversations into concise notes with OpenAI's GPT.
+
+## Usage
+### Our project is deployed on Google Cloud Platform using Kubernetes (GKE):
+- Transcribe patient-doctor interactions using Google Speech-to-Text.
+- Summarize conversations into concise notes with OpenAI's GPT.
+
+
