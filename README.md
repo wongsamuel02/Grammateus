@@ -49,8 +49,8 @@ Grammateus is an innovative AI-powered web application designed to reduce the ad
 - [User Manual](https://link-url-here.org)
 
 ## Contributers
-- Andy Lamb, Student @ Purdue University
-- Parthiv Patel, Student @ Purdue University
-- Samuel Wong, Student @ Purdue University
+- [Andy Lam](https://github.com/andylam20), Student @ Purdue University
+- [Parthiv Patel](https://github.com/parpat04), Student @ Purdue University
+- [Samuel Wong](https://github.com/wongsamuel02), Student @ Purdue University
 
 
