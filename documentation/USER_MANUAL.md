@@ -33,7 +33,6 @@ Grammateus is a web-based application accessible via any modern browser. Ensure 
    - Email Address
    - Password
 3. Submit the form by clicking the **Sign Up** button.
-4. You will receive a confirmation email. Click the link in the email to verify your account.
 
 ---
 
@@ -92,7 +91,7 @@ Grammateus is a web-based application accessible via any modern browser. Ensure 
 
 ## Support
 
-For any issues or questions, contact our support team at **support@grammateusapp.com**. We’re here to help!
+WORK IN PROGRESS
 
 ---
 
