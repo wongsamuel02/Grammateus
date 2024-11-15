@@ -8,8 +8,7 @@ Grammateus is an innovative AI-powered web application designed to reduce the ad
 - [Usage](#usage)
 - [Versioning](#versioning)
 - [Documentation Links](#documentation-links)
-- [Contributing](#contributing)
-- [License](#license)
+- [Contributers](#Contributers)
 
 ## Features
 - **Automatic Transcription**: Transcribe patient-doctor interactions using Google Speech-to-Text.
@@ -40,7 +39,18 @@ Grammateus is an innovative AI-powered web application designed to reduce the ad
 ## Usage
 - Access the frontend at `[LoadBalancer IP]:[Port]`.
 - **Key API Routes**:
-    - `/transcribe`: Upload audio for transcription.
-    - `/refine`: Generate patient notes from transcription text.
+    - `/generate`: Generate patient notes from transcription text.
+
+## Versioning
+### Current version: 1.0.0
+- The current version is shown in the frontend footer or can be found on GitHub via "Releases"
+
+## Documentation Links
+- [User Manual](https://link-url-here.org)
+
+## Contributers
+- Andy Lamb, Student @ Purdue University
+- Parthiv Patel, Student @ Purdue University
+- Samuel Wong, Student @ Purdue University
 
 
