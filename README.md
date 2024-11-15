@@ -35,10 +35,12 @@ Grammateus is an innovative AI-powered web application designed to reduce the ad
 ## Deployment
 ### Our project is deployed on Google Cloud Platform using Kubernetes (GKE):
 - Docker images are built and stored in Google Artifact Registry.
-- Kubernetes configurations are applied using <kubectl> for managing deployments and services.
+- Kubernetes configurations are applied using `kubectl` for managing deployments and services.
 
 ## Usage
-- Transcribe patient-doctor interactions using Google Speech-to-Text.
-- Summarize conversations into concise notes with OpenAI's GPT.
+- Access the frontend at `[LoadBalancer IP]:[Port]`.
+- **Key API Routes**:
+    - `/transcribe`: Upload audio for transcription.
+    - `/refine`: Generate patient notes from transcription text.
 
 
