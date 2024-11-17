@@ -37,7 +37,7 @@ Grammateus is an innovative AI-powered web application designed to reduce the ad
 - Kubernetes configurations are applied using `kubectl` for managing deployments and services.
 
 ## Usage
-- Access the frontend at `[LoadBalancer IP]:[Port]`.
+- Access the frontend at `[LoadBalancer IP]:[Port]`. (WIP)
 - **Key API Routes**:
     - `/generate`: Generate patient notes from transcription text.
 
@@ -46,7 +46,7 @@ Grammateus is an innovative AI-powered web application designed to reduce the ad
 - The current version is shown in the frontend footer or can be found on GitHub via "Releases"
 
 ## Documentation Links
-- [User Manual](https://link-url-here.org)
+- [User Manual](https://github.com/wongsamuel02/Grammateus/blob/main/documentation/USER_MANUAL.md)
 
 ## Contributers
 - [Andy Lam](https://github.com/andylam20), Student @ Purdue University
