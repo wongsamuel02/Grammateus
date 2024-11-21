@@ -20,7 +20,29 @@ app.use(express.json({
         }
     }
 }));
-app.use(cors());
+
+const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true, // Allows credentials to be sent
+    optionsSuccessStatus: 200 // For legacy browsers
+};
+
+app.use(cors(corsOptions));
+
+// Ensure Access-Control-Allow-Credentials is explicitly set
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+});
+
 app.use(cookieParser());
 
 // DB setup
@@ -37,6 +59,8 @@ app.use('/gpt', require('./routes/generate'))
 
 // Restricted Routes
 app.use(verifyJWT)
+app.use('/logout', require('./routes/logout'))
+app.use('/isVerified', require('./routes/verified'))
 
 // Start the server
 app.listen(port, () => {

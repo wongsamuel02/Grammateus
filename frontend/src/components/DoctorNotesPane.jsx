@@ -123,11 +123,11 @@ function DoctorNotesPane() {
       </Card>
 
       {/* Map over cardsData to render the cards */}
-      <Row>
+        <Row>
         {cardsData.map((card, index) => (
-          <Col md={6} key={index}>
+            <Col md={6} key={index}>
             <Card className="mb-3">
-              <Card.Body>
+                <Card.Body>
                 <Card.Title>{card.title}</Card.Title>
                 <Card.Text>
                   {editingCardIndex === index ? (
@@ -158,9 +158,9 @@ function DoctorNotesPane() {
                 )}
               </Card.Footer>
             </Card>
-          </Col>
+            </Col>
         ))}
-      </Row>
+        </Row>
     </div>
   );
 }
