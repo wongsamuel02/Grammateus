@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-deployment
+  namespace: my-app
 spec:
-  replicas: 2
+  # replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -14,6 +15,24 @@ spec:
     spec:
       containers:
       - name: backend
-        image: gcr.io/grammateus-cluster/backend:latest
+        image: wongsamuel02/grammateus-backend:1.8
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        envFrom:
+        - secretRef:
+            name: backend-env
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: my-app
+spec:
+  selector:
+    app: backend
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+  type: LoadBalancer

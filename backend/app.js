@@ -21,10 +21,12 @@ app.use(express.json({
     }
 }));
 
-const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://34.57.143.34:32000', 'http://34.57.143.34:3000'];
 
 const corsOptions = {
     origin: (origin, callback) => {
+        console.log("Printing Origin:");
+        console.log(origin);
         if (allowedOrigins.includes(origin) || !origin) {
             callback(null, true);
         } else {
@@ -34,6 +36,8 @@ const corsOptions = {
     credentials: true, // Allows credentials to be sent
     optionsSuccessStatus: 200 // For legacy browsers
 };
+
+
 
 app.use(cors(corsOptions));
 

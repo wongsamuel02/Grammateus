@@ -14,7 +14,9 @@ const mongoOptions = {
 // Function to connect to MongoDB
 const connectToMongoDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI, mongoOptions);
+        console.log("Trying URI:")
+        console.log(process.env.mongodb_uri)
+        await mongoose.connect(process.env.mongodb_uri, mongoOptions);
         console.log('MongoDB connected successfully!');
     } catch (err) {
         console.error('MongoDB connection error:', err);

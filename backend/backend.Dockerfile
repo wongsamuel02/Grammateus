@@ -5,9 +5,7 @@ FROM node:20
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY package*.json ./
-
-COPY backend_install_dependencies.sh ./
+COPY . .
 
 RUN chmod +x backend_install_dependencies.sh
 
@@ -18,5 +16,6 @@ RUN ./backend_install_dependencies.sh
 # Expose the port on which the app will run
 EXPOSE 8000
 
+CMD ["node", "app.js"]
 
 

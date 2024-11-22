@@ -13,7 +13,7 @@ const handleRefreshToken = async (req, res) => {
 
     // evaulate JWT
     jwt.verify(refreshToken, 
-        process.env.REFRESH_TOKEN_SECRET, 
+        process.env.refresh_token_secret, 
         (err, decoded) => {
             if (err || foundUser.email !== decoded.email) return res.sendStatus(403);
             const roles = Object.values(foundUser.roles)

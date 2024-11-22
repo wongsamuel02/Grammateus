@@ -5,9 +5,8 @@ FROM node:20
 WORKDIR /app
 
 # Copy the package.json and package-lock.json files
-COPY package*.json ./
+COPY . .
 
-COPY frontend_install_dependencies.sh ./
 RUN chmod +x frontend_install_dependencies.sh
 
 # Run the install script
@@ -17,5 +16,7 @@ RUN ./frontend_install_dependencies.sh
 
 # Expose the app port
 EXPOSE 3000
+
+CMD ["npm", "start"]
 
 
