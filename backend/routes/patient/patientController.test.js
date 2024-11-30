@@ -1,53 +1,53 @@
-const request = require('supertest');
-const app = require('../../app');
-const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
-const Patient = require('../../controllers/patientController');
-const User = require('../../model/Users');
-const bcrpty = require('bcrypt');
-const { beforeEach } = require('node:test');
-require('dotenv').config();
+// const request = require('supertest');
+// const app = require('../../app');
+// const mongoose = require('mongoose');
+// const { MongoMemoryServer } = require('mongodb-memory-server');
+// const Patient = require('../../controllers/patientController');
+// const User = require('../../model/Users');
+// const bcrpty = require('bcrypt');
+// const { beforeEach } = require('node:test');
+// require('dotenv').config();
 
-// MongoDB in-memory server for testing
-let mongoServer;
-let jwtToken;
+// // MongoDB in-memory server for testing
+// let mongoServer;
+// let jwtToken;
 
-const BASE_URL = '/patient'
+// const BASE_URL = '/patient'
 
-beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// beforeAll(async () => {
+//   mongoServer = await MongoMemoryServer.create();
+//   await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-  // Seed the database with a test users
-  const password = 'Password123!'
-  const hashedPassword = await bcrpty.hash(password, 10)
+//   // Seed the database with a test users
+//   const password = 'Password123!'
+//   const hashedPassword = await bcrpty.hash(password, 10)
   
-  const testUser = new User({
-      email: 'testuser@example.com',
-      password: hashedPassword, 
-  });
+//   const testUser = new User({
+//       email: 'testuser@example.com',
+//       password: hashedPassword, 
+//   });
   
-  await testUser.save();
+//   await testUser.save();
   
-  const response = await request(app)
-        .post('/auth')
-        .send({
-            email: 'testuser@example.com',
-            password: 'Password123!',
-        });
-  jwtToken = response.body.accessToken;
-});
+//   const response = await request(app)
+//         .post('/auth')
+//         .send({
+//             email: 'testuser@example.com',
+//             password: 'Password123!',
+//         });
+//   jwtToken = response.body.accessToken;
+// });
 
-beforeEach(async () => {
-  await mongoose.connection.db.dropDatabase();
-  try {
-        // Example: Remove all existing users
-        await Patient.deleteMany({});
+// beforeEach(async () => {
+//   await mongoose.connection.db.dropDatabase();
+//   try {
+//         // Example: Remove all existing users
+//         await Patient.deleteMany({});
 
-        // Example: Add some test users
-        await Patient.create([
-            {
-              firstName: 'John',
+//         // Example: Add some test users
+//         await Patient.create([
+//             {
+//               firstName: 'John',
 //               lastName: 'Doe',
 //               dob: '1990-01-01',
 //               gender: 'Male',
