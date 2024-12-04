@@ -66,3 +66,4 @@ app.use('/isVerified', require('./routes/verified'))
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+
