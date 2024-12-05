@@ -1,49 +1,19 @@
 /* Ensure that the html, body, and root div take up full height */
+:root {
+    --primary-color: #3D72FD;
+    --secondary-color: #CEDCFE;
+    --tertiary-color: #8E92A2;
+    --text-color: #18191D;
+    --background-color: white;
+    --border-color: #F5F5F5;
+}
+
 html, body, #root {
     height: 100%;
+    width: 100%;
+    padding: 0;
     margin: 0;
-  }
-  
-  /* The main container should take up the full viewport */
-  .app-container {
-    height: 100%;
-    display: flex;
-    background-color: #e9ecef; /* Gap color */
-  }
-  
-  /* Styling for panels to fill available space */
-  .panel-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  /* Inner content of the panel */
-  .panel-inner {
-    flex: 1;
-    margin: 5px; /* Creates gaps between panels */
-    padding: 15px;
-    border-radius: 10px;
-    overflow: auto;
-  }
-  
-  /* Resize handle for vertical split (left and right) */
-  .resize-handle-vertical {
-    width: 5px;
-    background-color: #6c757d; /* Gap color */
-    cursor: col-resize;
-  }
-  
-  /* Resize handle for horizontal split (top and bottom) */
-  .resize-handle-horizontal {
-    height: 5px;
-    background-color: #6c757d; /* Gap color */
-    cursor: row-resize;
-  }
-  
-  /* Hover effect for resize handles */
-  .resize-handle-vertical:hover,
-  .resize-handle-horizontal:hover {
-    background-color: #5a6268;
-  }
+    overflow: hidden; 
+    background-color: var(--background-color);
+}
   
