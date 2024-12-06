@@ -1,0 +1,157 @@
+.login-page-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-flow: row;
+}
+
+.left-container {
+    width: 70vw;
+    height: 100vh;
+    background-color: var(--primary-color);
+    padding: 0rem 2rem;
+    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3); /* Add shadow */
+}
+.left-container h1 {
+    padding-top: 2rem;
+    color: white;
+}
+.left-container h2 {
+    font-size: 2rem;
+    color: white;
+}
+.left-container p {
+    font-size: 1rem;
+    color: white;
+}
+
+.image-container {
+    display: flex; /* Use Flexbox */
+    align-items: center; /* Vertically center */
+    justify-content: center; /* Horizontally center */
+    height: 70%; /* Ensure the container has a height to center within */
+}
+
+img {
+    max-width: 100%; /* Ensure the image doesn't stretch beyond its container */
+    height: auto; /* Automatically adjust the height to maintain aspect ratio */
+}
+
+.right-container {
+    display: flex;
+    justify-content: center; /* Centers content vertically */
+    flex-direction: column; /* Aligns items vertically */
+    width: 40vw;
+    padding: 0 8rem;
+    margin-left: auto;
+    margin-right: auto; 
+}
+.right-container h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.input-container {
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-start;
+    color: var(--tertiary-color);
+    border-bottom: 0.1rem solid var(--tertiary-color); 
+    margin: 1rem 0; 
+    width: 100%;
+}
+
+.input-container:hover, 
+.input-container:focus-within {
+    color: black;
+    border-bottom: 0.1rem solid black; 
+    transform: scale(1.005);
+}
+
+.input-field {
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    flex-grow: 1;
+}
+
+.submit-button {
+    color: white;
+    width: 8rem;
+    height: 2.5rem; 
+    border: 0.1rem solid white; 
+    border-radius: 0.4rem; 
+    background-color: var(--primary-color);
+    margin-top: 1.5rem; 
+    transition: transform 0.1s ease;
+}
+.submit-button:hover {
+    transform: scale(1.01);
+}
+.submit-button:active {
+    transform: scale(0.95);
+}
+
+/* Media Queries for Small Devices (Phones) */
+@media (max-width: 800px) {
+    /* Login page container */
+    .login-page-container {
+        flex-flow: column; /* Stack items vertically on small screens */
+        height: auto; /* Adjust height to content */
+    }
+
+    /* Left container */
+    .left-container {
+        width: 100vw; /* Take full width of the screen */
+        height: auto; /* Allow height to adjust to content */
+        padding-left: 1rem; /* Reduced padding for smaller screens */
+    }
+
+    /* Image container */
+    .image-container {
+        height: 50%; 
+    }
+
+    img {
+        width: 80%; 
+    }
+
+    /* Right container */
+    .right-container {
+        width: 100vw; /* Take full width of the screen */
+        padding: 2rem 2rem; /* Reduce padding */
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .right-container h2 {
+        font-size: 1.5rem; /* Reduce font size for smaller screens */
+        margin-bottom: 1rem; /* Adjust margin */
+    }
+
+    .input-container {
+        flex-flow: row; /* Stack input and icon vertically on mobile */
+        align-items: flex-end; 
+        /* padding-bottom: 10px; */
+        margin: 0.5rem 0; /* Adjust margins */
+        /* border: 1px solid black; */
+    }
+
+    .input-field {
+        font-size: 1.2rem; /* Increase font size slightly for readability */
+        width: 100%; /* Input field should take full width */
+        margin-bottom: 0.5rem; /* Add space between input and icon */
+    }
+
+    .input-container svg { /* Select the icon specifically */
+        position: relative; /* Enable positioning for the icon */
+        top: -0.7rem; /* Adjust the icon’s vertical position (move it up) */
+    }
+
+    .submit-button {
+        width: 100%; /* Make button full-width on mobile */
+        height: 3rem; /* Adjust button height */
+        margin-top: 1rem; /* Adjust margin */
+    }
+}

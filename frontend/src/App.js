@@ -1,4 +1,4 @@
-import LoginForm from "./pages/NewLoginForm";
+import LoginForm from "./pages/Login/LoginForm";
 import RegisterForm from "./pages/RegisterForm";
 import Dashboard from "./pages/Dashboard";
 import RequireAuth from './components/RequireAuth';
