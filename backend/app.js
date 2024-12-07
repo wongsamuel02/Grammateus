@@ -51,7 +51,6 @@ app.use('/auth', require('./routes/authentication/auth'))
 app.use('/refresh', require('./routes/authentication/refresh'))
 app.use('/logout', require('./routes/authentication/logout'))
 app.use('/gpt', require('./routes/generate'))
-app.use('/logout', require('./routes/authentication/logout'))
 
 // Restricted Routes
 app.use(verifyJWT)
