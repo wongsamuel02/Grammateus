@@ -7,7 +7,6 @@ require('dotenv').config();
 
 // Express setup
 const app = express();
-const port = 8000;
 
 // Middleware
 app.use(express.json({
@@ -45,24 +44,18 @@ app.use((req, res, next) => {
 
 app.use(cookieParser());
 
-// DB setup
-const connectToMongoDB = require('./database');
-connectToMongoDB();
-
 // routes
-app.use('/', require('./routes/root'))
-app.use('/register', require('./routes/register'))
-app.use('/auth', require('./routes/auth'))
-app.use('/refresh', require('./routes/refresh'))
-app.use('/logout', require('./routes/logout'))
+app.use('/', require('./routes/root/root'))
+app.use('/register', require('./routes/authentication/register'))
+app.use('/auth', require('./routes/authentication/auth'))
+app.use('/refresh', require('./routes/authentication/refresh'))
+app.use('/logout', require('./routes/authentication/logout'))
 app.use('/gpt', require('./routes/generate'))
+app.use('/logout', require('./routes/authentication/logout'))
 
 // Restricted Routes
 app.use(verifyJWT)
-app.use('/logout', require('./routes/logout'))
-app.use('/isVerified', require('./routes/verified'))
+app.use('/isVerified', require('./routes/authentication/verified'))
+app.use('/patient', require('./routes/patient/patient'))
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+module.exports = app;

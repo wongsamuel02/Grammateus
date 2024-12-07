@@ -1,5 +1,5 @@
 const express = require('express');
-const { generatePatientNotes } = require('../controllers/generateController');  // Import the controller
+const { anonymizeTranscription, generatePatientNotes } = require('../controllers/generateController'); // Import the controllers
 
 const router = express.Router();
 
@@ -42,21 +42,28 @@ function parseMedicalRecord(input) {
 
     return sections;
 }
+
 // POST route to get patient notes from OpenAI
 router.post('/', async (req, res) => {
     try {
         const { originalText } = req.body;
-        
-        // Use the controller function to generate patient notes
-        const PatientNotes = await generatePatientNotes(originalText);
 
-        const parsedRecord = parseMedicalRecord(PatientNotes);
+        // Step 1: Anonymize transcription
+        const anonymizedText = await anonymizeTranscription(originalText);
+        console.log("Anonymized Text:", anonymizedText); // Log anonymized text
 
-        res.json({ parsedRecord });
+        // Step 2: Generate patient notes from anonymized text
+        const patientNotes = await generatePatientNotes(anonymizedText);
+
+        // Step 3: Parse the patient notes
+        const parsedRecord = parseMedicalRecord(patientNotes);
+
+        res.json({ anonymizedText, parsedRecord }); // Return anonymized text for debugging
     } catch (error) {
         console.error(error);
         res.status(500).send('Something went wrong');
     }
 });
+
 
 module.exports = router;
