@@ -2,7 +2,7 @@ const Patient = require('../model/Patient');
 
 // Example: Create a new Patient
 const createPatient = async (req, res) => {
-    const { firstName, lastName, dob, gender, phoneNumber, email, reason } = req.body
+    const { firstName, lastName, dob, gender, phoneNumber, email } = req.body
     
     if (!firstName || !lastName || !dob || !gender || !phoneNumber || !email) {
         return res.status(400).json({ error: "All fields are required: firstName, lastName, dob, gender, phoneNumber, email" });
@@ -27,19 +27,6 @@ const createPatient = async (req, res) => {
     if (isNaN(Date.parse(dob))) {
         return res.status(400).json({ error: "dob must be a valid date" });
     }
-
-    let reasonOfVisit
-    
-    if (reason) {
-        if (typeof reason !== 'string') {
-            return res.status(400).json({ error: "reason must be a string" });
-        }
-
-        reasonOfVisit = {
-            reason: reason,
-            date: new Date()
-        };
-    }
     
     try {
         const patientData = {
@@ -51,10 +38,6 @@ const createPatient = async (req, res) => {
             email,
         };
 
-        if (reasonOfVisit) {
-            patientData.reasonOfVisit = reasonOfVisit;
-        }
-
         const newPatient = new Patient(patientData);
 
         // Save the new patient to the database
@@ -63,47 +46,6 @@ const createPatient = async (req, res) => {
     } catch (err) {
         console.error("Error creating Patient:", err);
         return res.status(500).json({ error: "Error creating patient, please try again later" });
-    }
-}
-
-const addReasonOfVisitForPatient = async (req, res) => {
-    const { email, phoneNumber, reason } = req.body
-
-    if (!email && !phoneNumber) {
-        return res.status(400).json({ error: "Either email or phoneNumber is required" });
-    }
-
-    if (!reason) {
-        return res.status(400).json({ error: "reason required" });
-    }
-
-    if (typeof reason !== 'string') {
-        return res.status(400).json({ error: "reason must be a string" });
-    }
-
-    try {
-        // Find patient by email or phone number
-        const patient = await Patient.findOne({ $or: [{ email }, { phoneNumber }] });
-
-        if (!patient) {
-            return res.status(404).json({ error: "Patient not found" });
-        }
-
-        const reasonOfVisit = {
-            reason: reason,
-            date: new Date()
-        }
-
-        // Update the reasonOfVisit
-        patient.reasonOfVisit.push(reasonOfVisit);
-
-        // Save the updated patient record
-        const updatedPatient = await patient.save();
-
-        return res.status(200).json(updatedPatient);
-    } catch (err) {
-        console.error("Error updating patient:", err);
-        return res.status(500).json({ error: "Error updating patient, please try again later" });
     }
 }
 
@@ -193,4 +135,20 @@ const modifyPatientInfo = async (req, res) => {
     }
 }
 
-module.exports = { createPatient, addReasonOfVisitForPatient, getAllPatients, getPatient, modifyPatientInfo };
+const searchPatient = async (req, res) => {
+    try {
+        const query = req.query.q || '';
+        const patients = await Patient.find({
+            $or: [
+                { firstName: { $regex: query, $options: 'i' } },
+                { lastName: { $regex: query, $options: 'i' } }
+            ]
+        }).limit(10); // Case-insensitive search
+        res.json(patients);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+}
+
+module.exports = { createPatient, getAllPatients, getPatient, modifyPatientInfo, searchPatient };
