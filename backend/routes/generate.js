@@ -1,5 +1,5 @@
 const express = require('express');
-const { anonymizeTranscription, generatePatientNotes } = require('../controllers/generateController'); // Import the controllers
+const { anonymizeTranscription, formatToScript, generatePatientNotes } = require('../controllers/generateController'); // Import the controllers
 
 const router = express.Router();
 
@@ -52,13 +52,17 @@ router.post('/', async (req, res) => {
         const anonymizedText = await anonymizeTranscription(originalText);
         console.log("Anonymized Text:", anonymizedText); // Log anonymized text
 
-        // Step 2: Generate patient notes from anonymized text
+        // Step 2: Generate formatted script from anonymized text
+        const formattedScript = await formatToScript(anonymizedText);
+        console.log("Formatted Text", formattedScript); // Log formatted script
+
+        // Step 3: Generate patient notes from anonymized text
         const patientNotes = await generatePatientNotes(anonymizedText);
 
-        // Step 3: Parse the patient notes
+        // Step 4: Parse the patient notes
         const parsedRecord = parseMedicalRecord(patientNotes);
 
-        res.json({ anonymizedText, parsedRecord }); // Return anonymized text for debugging
+        res.json({ formattedScript, parsedRecord });
     } catch (error) {
         console.error(error);
         res.status(500).send('Something went wrong');
