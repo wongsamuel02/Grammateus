@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
-import SearchBar from './SearchBar';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import axios from '../api/axios';
 
@@ -104,7 +103,7 @@ function DoctorNotesPane() {
   return (
     <div className="doctor-notes-pane">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2%' }}>
-        <SearchBar style={{ width: '100%', alignItems: 'center' }} />
+        <h1 style={{ width: '100%'}}> Doctor's Notes</h1>
         <div style={{ marginLeft: 'auto', display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
           <button className="btn btn-primary mx-2" onClick={generate}>Generate</button>
           <button className="btn btn-success mx-2" onClick={startListening}>Start</button>
@@ -112,7 +111,6 @@ function DoctorNotesPane() {
           <button className="btn btn-warning mx-2" onClick={resetEverything}>Reset</button>
         </div>
       </div>
-      <h2 className="mb-3">Doctor's Notes</h2>
       <Card className="mb-3">
         <Card.Body>
           <Card.Title>Transcription</Card.Title>

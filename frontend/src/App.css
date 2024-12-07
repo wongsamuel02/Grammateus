@@ -6,7 +6,7 @@ html, body, #root {
   
   /* The main container should take up the full viewport */
   .app-container {
-    height: 100%;
+    height: calc(100% - 40px);
     display: flex;
     background-color: #e9ecef; /* Gap color */
   }

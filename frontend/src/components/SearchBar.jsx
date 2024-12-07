@@ -24,12 +24,11 @@ function SearchBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle search submission logic if needed
     console.log('Search submitted:', searchTerm);
   };
 
   return (
-    <div>
+    <div style={{ position: 'relative', margin: '0.5% 20%' }}>
       <Form className="search-bar d-flex" onSubmit={handleSubmit}>
         <Form.Group controlId="search" className="flex-grow-1 me-2">
           <Form.Control
