@@ -1,0 +1,15 @@
+.navbar {
+    background: var(--background-color);
+    width: 100vw;
+    height: 80px;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;                /* Makes navbar a flex container */
+    align-items: center;          /* Centers content vertically */
+}
+
+.hamburger {
+    padding-left: 30px;
+    height: 60%;                  /* Sets the height of the hamburger relative to navbar */
+    width: auto;                  /* Width can be auto, or set a fixed size */
+    color: var(--primary-color);                 /* Optional: to see the hamburger icon clearly */
+}
