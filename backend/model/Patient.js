@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const reasonOfVisitSchema = new Schema({
-    reason: { type: String, required: true, trim: true },
-    date: { type: Date, required: true, default: Date.now },
-})
-
 const patientSchema = new Schema({
     firstName: {
         type: String,
@@ -40,10 +35,6 @@ const patientSchema = new Schema({
         unique: true,
         lowercase: true,
         trim: true,
-    },
-    reasonOfVisit: {
-        type: [reasonOfVisitSchema],
-        required: false,
     }
 })
 
