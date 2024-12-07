@@ -6,3 +6,4 @@ npm install @eslint/create-config@1.3.1
 npm install bootstrap@5.3.3
 npm install react-bootstrap@2.10.5
 npm install react-resizable-panels
+npm install react-icons
