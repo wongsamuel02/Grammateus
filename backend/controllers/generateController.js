@@ -32,6 +32,28 @@ const anonymizeTranscription = async (originalText) => {
 };
 
 /**
+ * Function to format anonymized transcription into a readable doctor-patient script
+ * @param {string} anonymizedText - The anonymized transcription
+ * @returns {Promise<string>} - The formatted script
+ */
+const formatToScript = async (anonymizedText) => {
+    const formattingPrompt = `Please reformat the following anonymized transcription of a doctor-patient conversation into a readable, structured script. 
+    Use the following style:
+    Doctor: [Context or action if applicable] "Doctor's speech"
+    Patient: "Patient's response"
+    Ensure proper punctuation and clarity. Avoid adding any hallucinated content. The anonymized transcription is as follows:
+    \n\n"${anonymizedText}"`;
+
+    // Call OpenAI API to format the text
+    const response = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo-0125',
+        messages: [{ role: 'user', content: formattingPrompt }],
+    });
+
+    return response.choices[0].message.content.trim();
+};
+
+/**
  * Function to generate patient notes using OpenAI API
  * @param {string} stippedTest - The PII-stripped transcription
  * @returns {Promise<string>} - The patient notes from OpenAI
@@ -56,4 +78,4 @@ const generatePatientNotes = async (strippedText) => {
     return response.choices[0].message.content.trim();
 };
 
-module.exports = { anonymizeTranscription, generatePatientNotes };
+module.exports = { anonymizeTranscription, formatToScript, generatePatientNotes };
