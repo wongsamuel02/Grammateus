@@ -13,8 +13,9 @@ function HomePage() {
       <SearchBar style={{ height: '50px' }} />
       <div className="app-container">
         <PanelGroup direction="horizontal">
-          <Panel defaultSize={25} className="panel-content">
+          <Panel defaultSize={28} className="panel-content">
             <div className="panel-inner bg-light rounded">
+              <h2>Previous Trancriptions</h2>
               <PatientTranscriptionPane />
             </div>
           </Panel>
@@ -22,7 +23,7 @@ function HomePage() {
           <PanelResizeHandle className="resize-handle-vertical" />
           <Panel className="panel-content">
             <PanelGroup direction="vertical">
-              <Panel defaultSize={80} className="panel-content">
+              <Panel defaultSize={72} className="panel-content">
                 <div className="panel-inner bg-white rounded">
                   <DoctorNotesPane />
                   <LogoutButton />

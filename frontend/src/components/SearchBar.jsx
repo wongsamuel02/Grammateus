@@ -3,7 +3,26 @@ import { Form, Button, ListGroup } from 'react-bootstrap';
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState([
+    {
+      "_id": "1",
+      "name": "John Doe",
+      "dob": "1990-01-15",
+      "gender": "Female"
+    },
+    {
+      "_id": "2",
+      "name": "Jane Smith",
+      "dob": "1985-05-30",
+      "gender": "Female"
+    },
+    {
+      "_id": "3",
+      "name": "Michael Johnson",
+      "dob": "1978-11-23",
+      "gender": "Male"
+    }
+  ]);
 
   const handleSearchChange = async (e) => {
     const query = e.target.value;
@@ -45,7 +64,20 @@ function SearchBar() {
       {suggestions.length > 0 && (
         <ListGroup className="mt-2">
           {suggestions.map((patient) => (
-            <ListGroup.Item key={patient._id}>{patient.name}</ListGroup.Item>
+            <ListGroup.Item key={patient._id}>
+              <div
+                className="patient-row"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr 1fr',
+                  columnGap: '1rem'
+                }}
+              >
+                <span>{patient.name}</span>
+                <span>DOB: {patient.dob}</span>
+                <span>Gender: {patient.gender}</span>
+              </div>
+            </ListGroup.Item>
           ))}
         </ListGroup>
       )}
