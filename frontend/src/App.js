@@ -1,11 +1,10 @@
 import LoginForm from "./pages/Login/LoginForm";
 import RegisterForm from "./pages/RegisterForm";
-import Dashboard from "./pages/Dashboard";
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route, Navigate } from "react-router-dom";
 import PersistLogin from "./components/PersistLogin";
-import Layout from "./components/Layout/Layout";
 import './App.css'
+import HomePage from "./pages/Home";
 
 function App() {
   return (
@@ -16,10 +15,8 @@ function App() {
         {/* Private Routes */}
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />} >
-            <Route element={<Layout />}>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/register" element={<RegisterForm/>} />
-            </Route>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<RegisterForm/>} />
           </Route>
         </Route>
 
