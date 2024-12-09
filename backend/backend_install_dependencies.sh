@@ -13,3 +13,4 @@ npm install cookie-parser@1.4.7
 npm install nodemon@3.1.7
 npm install jest supertest
 npm install --save-dev mongodb-memory-server
+npm install uuid@11.0.3
