@@ -3,13 +3,17 @@ const User = require('../model/Users');
 const Patient = require('../model/Patient');
 const { getUser } = require('../controllers/userController');
 const { getPatient } = require('../controllers/patientController');
+const { generate } = require('../routes/generate')
 
 const createVisit = async (req, res) => {
-    const { doctorEmail, patientEmail, duration, transcriptionData } = req.body;
-    if (!doctorEmail && !patientEmail && !duration && !transcriptionData) return res.status(400).json({ 'message': 'doctorEmail, patientEmail, duration, transcriptionData not in req' })
+    const { doctorEmail, patientEmail, duration, originalText } = req.body;
+    if (!doctorEmail && !patientEmail && !duration && !originalText) return res.status(400).json({ 'message': 'doctorEmail, patientEmail, duration, transcriptionData not in req' })
     
     try {
-        // Get doctor and patient objects from emails
+        const data = await generate(originalText);
+        const formattedScript = data.formattedScript;
+        const parsedRecord = data.parsedRecord; 
+
         const doctor = await getUser(doctorEmail);
         const patient = await getPatient(patientEmail);
 
@@ -25,13 +29,16 @@ const createVisit = async (req, res) => {
             patient: patient._id,
             date: Date(),
             duration: duration,
-            transcriptData: transcriptionData
+            transcriptData: formattedScript,  
         });
+
         await newVisit.save();
-        res.status(201).json(newVisit);
+        res.status(201).json(parsedRecord);
+
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error creating visit', error: error.message });
-    } 
+    }
 }
 
 const getAllVisitsByPatient = async (req, res) => {
