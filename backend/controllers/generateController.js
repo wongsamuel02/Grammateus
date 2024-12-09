@@ -12,13 +12,9 @@ const openai = new OpenAI({
  * @returns {Promise<string>} - The anonymized transcription
  */
 const anonymizeTranscription = async (originalText) => {
-    const piiPrompt = `Please replace all Personally Identifiable Information (PII) in the following text with appropriate tags. 
-    For example:
+    const piiPrompt = `Please replace all Personally Identifiable Information (PII) in the following text with appropriate tags:
     - Replace names with 'patient_name'
-    - Replace dates with 'patient_date'
-    - Replace locations with 'patient_location'
-    - Replace specific numbers (like age) with 'patient_age'
-    - Replace any other PII with relevant tags.
+    Do not replace anything besides names.  
     Keep the rest of the transcription as is. Here is the text:
     \n\n"${originalText}"`;
 
