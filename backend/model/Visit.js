@@ -3,17 +3,21 @@ const Schema = mongoose.Schema;
 
 const visitSchema = new Schema({
     doctor: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Users', // Reference to the Users collection
         required: true
     },
     patient: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Patient', // Reference to the Patient collection
         required: true
     },
+    date: {
+        type: Date,
+        required: true
+    },
     duration: {
-        type: Number,
+        type: Number, // Minutes
         required: true
     },
     transcriptData: {
