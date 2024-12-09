@@ -56,5 +56,6 @@ app.use('/gpt', require('./routes/generate'))
 app.use(verifyJWT)
 app.use('/isVerified', require('./routes/authentication/verified'))
 app.use('/patient', require('./routes/patient/patient'))
+app.use('/visit', require('./routes/visit'))
 
 module.exports = app;

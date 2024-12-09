@@ -49,39 +49,19 @@ const createPatient = async (req, res) => {
     }
 }
 
-const getAllPatients = async (req, res) => {
-    try {
-        const patients = await Patient.find();
-
-        if (!patients) {
-            return res.status(404).json({ error: "Patients not found" });
-        }
-
-        return res.status(200).json(patients)
-    } catch (err) {
-        console.error("Error getting patients:", err);
-        return res.status(500).json({ error: "Error getting patients, please try again later" });
+const getPatient = async (email) => {
+    if(!email) {
+        throw new Error('Email is required');
     }
-}
-
-const getPatient = async (req, res) => {
-    const { email, phoneNumber } = req.body
-
-    if (!email && !phoneNumber) {
-        return res.status(400).json({ error: "Either email or phoneNumber required"})
-    }
-
     try {
-        const patient = await Patient.findOne({ $or: [{ email }, { phoneNumber }] });
-
-        if (!patient) {
-            return res.status(404).json({ error: "Patient not found" });
+        const user = await Patient.findOne({ email: email }); // Query to find a user with the given email
+        if (user) {
+            return user;
+        } else {
+            return null;
         }
-
-        return res.status(200).json(patient)
-    } catch (err) {
-        console.error("Error getting patient:", err);
-        return res.status(500).json({ error: "Error getting patient, please try again later" });
+    } catch (error) {
+        throw error;
     }
 }
 
@@ -151,4 +131,4 @@ const searchPatient = async (req, res) => {
     }
 }
 
-module.exports = { createPatient, getAllPatients, getPatient, modifyPatientInfo, searchPatient };
+module.exports = { createPatient, getPatient, modifyPatientInfo, searchPatient };
