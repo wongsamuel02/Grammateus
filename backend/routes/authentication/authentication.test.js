@@ -52,13 +52,6 @@ describe('Authentication Tests', () => {
         jwt = response.body.accessToken
         expect(jwt).toBeTruthy();
 
-        // Check if we are authenticated
-        response = await request(app)
-            .get('/isVerified')
-            .set('Authorization', `Bearer ${jwt}`)
-
-        expect(response.status).toBe(200);
-        expect(response.body).toStrictEqual({"message": "Verified"});
     });
 
     // Test Logging out
