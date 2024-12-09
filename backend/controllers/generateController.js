@@ -37,11 +37,11 @@ const anonymizeTranscription = async (originalText) => {
  * @returns {Promise<string>} - The formatted script
  */
 const formatToScript = async (anonymizedText) => {
-    const formattingPrompt = `Please reformat the following anonymized transcription of a doctor-patient conversation into a readable, structured script. 
+    const formattingPrompt = `Please reformat the following anonymized transcription of a doctor-patient conversation into a readable, structured script. Be sure to stick to the original words almost word-for-word, don't add any extra words. 
     Use the following style:
     Doctor: [Context or action if applicable] "Doctor's speech"
     Patient: "Patient's response"
-    Ensure proper punctuation and clarity. Avoid adding any hallucinated content. The anonymized transcription is as follows:
+    Ensure proper punctuation and clarity. Don't add any hallucinated content. The anonymized transcription is as follows:
     \n\n"${anonymizedText}"`;
 
     // Call OpenAI API to format the text

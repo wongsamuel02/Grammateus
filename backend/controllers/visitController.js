@@ -52,7 +52,7 @@ const getAllVisitsByPatient = async (req, res) => {
         }
 
         const visits = await Visit.find({ patient: patient._id })
-            .populate('doctor')
+            .populate('doctor', 'firstName lastName email')
             .populate('patient');
         return res.status(200).json(visits);
     } catch (error) {
@@ -72,7 +72,7 @@ const getAllVisitsByDoctor = async (req, res) => {
         }
 
         const visits = await Visit.find({ doctor: doctor._id })
-            .populate('doctor')
+            .populate('doctor', 'firstName lastName email')
             .populate('patient')
             .sort({ date: -1 }) // Sort by date in descending order (most recent first)
             .exec();

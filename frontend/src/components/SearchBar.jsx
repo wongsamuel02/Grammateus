@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Form, Button, ListGroup } from 'react-bootstrap';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
-function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState('');
+function SearchBar({ updateSearchSelection }) {
   const [suggestions, setSuggestions] = useState([]);
+  const [userInput, setUserInput] = useState('');
+  const axiosPrivate = useAxiosPrivate();
 
   const handleSearchChange = async (e) => {
     const query = e.target.value;
-    setSearchTerm(query);
+    setUserInput(query);
 
     if (query.trim()) {
       try {
-        const response = await fetch(`/api/patients/search?q=${query}`);
-        const data = await response.json();
+        const response = await axiosPrivate(`/patient/search?q=${query}`);
+        const data = response.data;
         setSuggestions(data);
       } catch (error) {
         console.error('Error fetching search suggestions:', error);
@@ -24,7 +26,7 @@ function SearchBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Search submitted:', searchTerm);
+    console.log('Search submitted:', userInput);
   };
 
   return (
@@ -34,7 +36,7 @@ function SearchBar() {
           <Form.Control
             type="text"
             placeholder="Search for patient..."
-            value={searchTerm}
+            value={userInput}
             onChange={handleSearchChange}
           />
         </Form.Group>
@@ -43,9 +45,46 @@ function SearchBar() {
         </Button>
       </Form>
       {suggestions.length > 0 && (
-        <ListGroup className="mt-2">
+        <ListGroup
+          className="mt-2"
+          style={{
+            position: 'absolute',
+            top: '100%',
+            left: '0',
+            right: '0',
+            zIndex: 1000,
+            maxHeight: '200px',
+            overflowY: 'auto',
+            backgroundColor: 'white',
+            border: '1px solid #ccc',
+            borderRadius: '5px',
+          }}
+        >
           {suggestions.map((patient) => (
-            <ListGroup.Item key={patient._id}>{patient.name}</ListGroup.Item>
+            <ListGroup.Item
+              key={patient._id}
+              style={{
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                updateSearchSelection(patient);
+                setUserInput(`${patient.firstName} ${patient.lastName}`);
+                setSuggestions([]);
+              }}
+            >
+              <div
+                className="patient-row"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr 1fr',
+                  columnGap: '1rem',
+                }}
+              >
+                <span>{patient.firstName} {patient.lastName}</span>
+                <span>DOB: {patient.dob}</span>
+                <span>Gender: {patient.gender}</span>
+              </div>
+            </ListGroup.Item>
           ))}
         </ListGroup>
       )}

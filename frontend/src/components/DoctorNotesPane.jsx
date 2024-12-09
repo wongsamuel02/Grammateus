@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import axios from '../api/axios';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
-function DoctorNotesPane() {
+function DoctorNotesPane( { selectedPatient, doctorEmail, setUpdateTrigger } ) {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
-  const [editingCardIndex, setEditingCardIndex] = useState(null);  // State to track which card is being edited
-  const [editedText, setEditedText] = useState("");  // State to store edited text
+  const [editingCardIndex, setEditingCardIndex] = useState(null);
+  const [editedText, setEditedText] = useState(""); 
+  const axiosPrivate = useAxiosPrivate();
+  const [loading, setLoading] = useState(false);
 
   const {
     transcript,
@@ -15,7 +17,7 @@ function DoctorNotesPane() {
     resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
-  
+
   const [cardsData, setCardsData] = useState([
     { title: "Subjective", text: ["This is subjective note 1"] },
     { title: "Objective", text: ["This is objective note 1"] },
@@ -32,7 +34,7 @@ function DoctorNotesPane() {
       SpeechRecognition.startListening({ continuous: true });
       const now = Date.now();
       const id = setInterval(() => {
-        setElapsedTime(Date.now() - (now - elapsedTime));
+        setElapsedTime(Date.now() - now);
       }, 1000);
       setIntervalId(id);
     }
@@ -49,13 +51,24 @@ function DoctorNotesPane() {
     clearInterval(intervalId);
     setElapsedTime(0);
     setIntervalId(null);
+    setCardsData([
+      { title: "Subjective", text: ["This is subjective note 1"] },
+      { title: "Objective", text: ["This is objective note 1"] },
+      { title: "Assessment", text: ["This is assessment note 1"] },
+      { title: "Plan", text: ["This is plan note 1"] }
+    ]);
   };
 
-  const generate = () => {
+  const generate = async () => {
     SpeechRecognition.stopListening();
-    summarizeNotes(transcript);
-    clearInterval(intervalId);
-    setIntervalId(null);
+    setLoading(true);
+    try {
+      await summarizeNotes(transcript);
+    } finally {
+      setLoading(false); // Stop loading animation
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
   };
 
   const summarizeNotes = async (originalText) => {
@@ -64,8 +77,15 @@ function DoctorNotesPane() {
     }
 
     try {
-      const response = await axios.post('/gpt', { originalText });
-      const { parsedRecord } = response.data;
+      const additionalInfo = {
+        doctorEmail: doctorEmail,
+        patientEmail: selectedPatient.email,
+        duration: getDurationInMinutes(),
+
+      };
+      const response = await axiosPrivate.post('/visit/create', { originalText, ...additionalInfo, });
+      console.log(response);
+      const parsedRecord  = response.data;
 
       const updatedCardsData = [
         { title: "Subjective", text: parsedRecord.subjective },
@@ -75,35 +95,46 @@ function DoctorNotesPane() {
       ];
 
       setCardsData(updatedCardsData);
+      setUpdateTrigger((prev) => prev + 1);
     } catch (error) {
       console.error('Error fetching data:', error.message);
     }
   };
 
   const handleEditClick = (index) => {
-    setEditingCardIndex(index);  // Set the index of the card being edited
-    // Pre-fill the textarea with current text, including • bullet points
+    setEditingCardIndex(index); 
     const bulletText = cardsData[index].text.map(item => `• ${item}`).join("\n");
     setEditedText(bulletText);
   };
 
   const handleSaveClick = (index) => {
     const updatedCards = [...cardsData];
-    // Parse the textarea back into an array of list items, removing the • bullet points
     const newText = editedText.split("\n").map(line => line.replace(/^• /, ""));
     updatedCards[index].text = newText;
     setCardsData(updatedCards);
-    setEditingCardIndex(null);  // Exit editing mode
+    setEditingCardIndex(null);
   };
 
   const handleTextChange = (event) => {
     setEditedText(event.target.value);
   };
 
+  const getDurationInMinutes = () => {
+    return Math.round(elapsedTime / 60000);
+  };
+
   return (
     <div className="doctor-notes-pane">
+      {/* Loading spinner */}
+      {loading && (
+        <div className="loading-overlay">
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </div>
+      )}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2%' }}>
-        <h1 style={{ width: '100%'}}> Doctor's Notes</h1>
+        <h1 style={{ width: '100%' }}> Doctor's Notes</h1>
         <div style={{ marginLeft: 'auto', display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
           <button className="btn btn-primary mx-2" onClick={generate}>Generate</button>
           <button className="btn btn-success mx-2" onClick={startListening}>Start</button>
@@ -117,15 +148,18 @@ function DoctorNotesPane() {
           <Card.Text>
             <p>{transcript}</p>
           </Card.Text>
+          <Card.Footer>
+            <strong>Duration:</strong> {getDurationInMinutes()} minutes
+          </Card.Footer>
         </Card.Body>
       </Card>
 
       {/* Map over cardsData to render the cards */}
-        <Row>
+      <Row>
         {cardsData.map((card, index) => (
-            <Col md={6} key={index}>
+          <Col md={6} key={index}>
             <Card className="mb-3">
-                <Card.Body>
+              <Card.Body>
                 <Card.Title>{card.title}</Card.Title>
                 <Card.Text>
                   {editingCardIndex === index ? (
@@ -156,9 +190,9 @@ function DoctorNotesPane() {
                 )}
               </Card.Footer>
             </Card>
-            </Col>
+          </Col>
         ))}
-        </Row>
+      </Row>
     </div>
   );
 }
