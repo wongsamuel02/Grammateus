@@ -24,11 +24,20 @@ const createPatient = async (req, res) => {
         return res.status(400).json({ error: "gender must be either 'Male' or 'Female'" });
     }
     
-    if (isNaN(Date.parse(dob))) {
-        return res.status(400).json({ error: "dob must be a valid date" });
+    const dobPattern = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dobPattern.test(dob)) {
+        return res.status(400).json({ error: "dob must be in the format YYYY-MM-DD" });
     }
-    
+
     try {
+        const existingPatient = await Patient.findOne({
+            phoneNumber,
+            email
+        });
+        if (existingPatient) {
+            return res.status(400).json({ error: "A patient with the same email, name, and date of birth already exists" });
+        }
+
         const patientData = {
             firstName,
             lastName,
