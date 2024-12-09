@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
-function PatientTranscriptionPane({ patientTranscription, selectedPatient }) {
+function PatientTranscriptionPane({ patientTranscription, selectedPatient, updateTrigger }) {
   const axiosPrivate = useAxiosPrivate();
 
   const [transcriptions, setTranscriptions] = useState([]);
@@ -30,6 +30,12 @@ function PatientTranscriptionPane({ patientTranscription, selectedPatient }) {
     return `${words}${transcriptData.split(/\s+/).length > 10 ? '...' : ''}`;
   };
 
+  const formatTranscriptData = (transcriptData) => {
+    if (!transcriptData) return 'No full transcript available';
+    return transcriptData
+  };
+  
+
   useEffect(() => {
     const fetchTranscriptions = async () => {
       try {
@@ -42,7 +48,7 @@ function PatientTranscriptionPane({ patientTranscription, selectedPatient }) {
     };
 
     fetchTranscriptions();
-  }, [selectedPatient]);
+  }, [selectedPatient, updateTrigger]);
 
   const handleCardClick = (transcription) => {
     setIsClosing(false); // Reset closing state
@@ -51,7 +57,7 @@ function PatientTranscriptionPane({ patientTranscription, selectedPatient }) {
 
   const handleCloseModal = () => {
     setIsClosing(true);
-    setTimeout(() => setSelectedTranscription(null), 300); // Wait for the transition to complete
+    setTimeout(() => setSelectedTranscription(null), 300);
   };
 
   return (
@@ -123,7 +129,7 @@ function PatientTranscriptionPane({ patientTranscription, selectedPatient }) {
                 right: '30px',
                 fontSize: '28px',
                 cursor: 'pointer',
-                color: '#555',
+                color: '#fff',
               }}
               onClick={handleCloseModal}
             >
@@ -131,7 +137,7 @@ function PatientTranscriptionPane({ patientTranscription, selectedPatient }) {
             </div>
             <h2>{formatTranscriptionDate(selectedTranscription.date)}</h2>
             <p>Duration: {selectedTranscription.duration} min</p>
-            <p>{selectedTranscription.transcriptData || 'No full transcript available'}</p>
+            <p style={{ whiteSpace: 'pre-wrap' }}>{formatTranscriptData(selectedTranscription.transcriptData)}</p>
           </div>
         </div>
       )}

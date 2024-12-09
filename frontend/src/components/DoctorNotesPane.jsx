@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import axios from '../api/axios';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
-function DoctorNotesPane( { selectedPatient, doctorEmail } ) {
+function DoctorNotesPane( { selectedPatient, doctorEmail, setUpdateTrigger } ) {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
   const [editingCardIndex, setEditingCardIndex] = useState(null);
   const [editedText, setEditedText] = useState(""); 
+  const axiosPrivate = useAxiosPrivate();
+  const [loading, setLoading] = useState(false);
 
   const {
     transcript,
@@ -57,11 +59,16 @@ function DoctorNotesPane( { selectedPatient, doctorEmail } ) {
     ]);
   };
 
-  const generate = () => {
+  const generate = async () => {
     SpeechRecognition.stopListening();
-    summarizeNotes(transcript);
-    clearInterval(intervalId);
-    setIntervalId(null);
+    setLoading(true);
+    try {
+      await summarizeNotes(transcript);
+    } finally {
+      setLoading(false); // Stop loading animation
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
   };
 
   const summarizeNotes = async (originalText) => {
@@ -72,12 +79,13 @@ function DoctorNotesPane( { selectedPatient, doctorEmail } ) {
     try {
       const additionalInfo = {
         doctorEmail: doctorEmail,
-        patientID: selectedPatient.email,
+        patientEmail: selectedPatient.email,
         duration: getDurationInMinutes(),
 
       };
-      const response = await axios.post('/gpt', { originalText, ...additionalInfo, });
-      const { parsedRecord } = response.data;
+      const response = await axiosPrivate.post('/visit/create', { originalText, ...additionalInfo, });
+      console.log(response);
+      const parsedRecord  = response.data;
 
       const updatedCardsData = [
         { title: "Subjective", text: parsedRecord.subjective },
@@ -87,6 +95,7 @@ function DoctorNotesPane( { selectedPatient, doctorEmail } ) {
       ];
 
       setCardsData(updatedCardsData);
+      setUpdateTrigger((prev) => prev + 1);
     } catch (error) {
       console.error('Error fetching data:', error.message);
     }
@@ -116,6 +125,14 @@ function DoctorNotesPane( { selectedPatient, doctorEmail } ) {
 
   return (
     <div className="doctor-notes-pane">
+      {/* Loading spinner */}
+      {loading && (
+        <div className="loading-overlay">
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </div>
+      )}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2%' }}>
         <h1 style={{ width: '100%' }}> Doctor's Notes</h1>
         <div style={{ marginLeft: 'auto', display: 'flex', justifyContent: 'flex-end', width: '100%' }}>

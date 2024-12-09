@@ -12,6 +12,7 @@ function HomePage() {
   const [selectedPatient, setSelectedPatient] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const [doctorEmail, setDoctorEmail] = useState('');
+  const [updateTrigger, setUpdateTrigger] = useState(0);
 
   useEffect(() => {
     const getDoctorEmail = async () => {
@@ -41,7 +42,7 @@ function HomePage() {
           <Panel defaultSize={28} className="panel-content">
             <div className="panel-inner bg-light rounded">
               <h2>Previous Trancriptions</h2>
-              <PatientTranscriptionPane patientTranscription={selectedPatient.email} selectedPatient={selectedPatient} />
+              <PatientTranscriptionPane patientTranscription={selectedPatient.email} selectedPatient={selectedPatient} updateTrigger={updateTrigger} />
             </div>
           </Panel>
 
@@ -50,7 +51,7 @@ function HomePage() {
             <PanelGroup direction="vertical">
               <Panel defaultSize={72} className="panel-content">
                 <div className="panel-inner bg-white rounded">
-                  <DoctorNotesPane selectedPatient={selectedPatient} doctorEmail={doctorEmail} />
+                  <DoctorNotesPane selectedPatient={selectedPatient} doctorEmail={doctorEmail} setUpdateTrigger={setUpdateTrigger} />
                   <LogoutButton />
                 </div>
               </Panel>

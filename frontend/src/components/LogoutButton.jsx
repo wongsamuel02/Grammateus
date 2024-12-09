@@ -7,15 +7,15 @@ const LogoutButton = () => {
     const handleLogout = async () => {
         try {
             await logout();
-            // You can redirect to the login page or home page after logout
-            window.location.href = '/login'; // or use your router's navigate function
+            
+            window.location.href = '/login';
         } catch (error) {
             console.error("Failed to logout:", error);
         }
     };
 
     return (
-        <button onClick={handleLogout}>
+        <button onClick={handleLogout} className="btn btn-primary mx-2">
             Logout
         </button>
     );
