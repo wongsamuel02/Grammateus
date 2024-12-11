@@ -1,0 +1,6 @@
+.main-container {
+  display: flex;
+  flex-flow: row;
+  padding: 0;
+  margin: 0;
+}

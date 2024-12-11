@@ -1,0 +1,20 @@
+.search-bar {
+    margin: 0 10%; /* Add some spacing around the bar */
+    z-index: 1000; /* Ensure it stays above other elements */
+    background-color: #ffffff; /* Match the design with the page */
+    border-radius: 5px; /* Smooth edges for modern look */
+  }
+  
+  .search-bar .form-control {
+    border: 1px solid #ced4da; /* Subtle border for better visibility */
+  }
+  
+  .list-group {
+    position: absolute; /* Ensure suggestions dropdown doesn't impact layout */
+    z-index: 1050; /* Keep it above other elements */
+    background-color: white; /* Ensure clear visibility */
+    width: calc(100% - 32px); /* Align dropdown width with the search bar */
+    border-radius: 5px; /* Match the border radius of the search bar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  }
+  

@@ -15,13 +15,16 @@ spec:
     spec:
       containers:
       - name: backend
-        image: wongsamuel02/grammateus-backend:1.8
+        image: wongsamuel02/grammateus-backend:2.5
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
         envFrom:
         - secretRef:
             name: backend-env
+        # env:
+        # - name: mongodb_uri
+        #   value: "mongodb+srv://wongsamuel02:tTniMB8d5JbXFCKm@grammateus.0yrfv.mongodb.net/Grammateus?retryWrites=true&w=majority&appName=Grammateus"
 ---
 apiVersion: v1
 kind: Service

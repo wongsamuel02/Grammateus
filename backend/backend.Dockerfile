@@ -16,6 +16,6 @@ RUN ./backend_install_dependencies.sh
 # Expose the port on which the app will run
 EXPOSE 8000
 
-CMD ["node", "app.js"]
+CMD ["node", "index.js"]
 
 

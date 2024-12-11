@@ -24,7 +24,7 @@ const handleRefreshToken = async (req, res) => {
                 }
             };
             const accessToken = generateAccessToken(accessTokenInfo)
-            res.json({ roles, accessToken})
+            res.status(200).json({ roles, accessToken})
         }
     );
 }

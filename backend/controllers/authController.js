@@ -4,7 +4,7 @@ const { generateAccessToken, generateRefreshToken } = require('../utils/generate
 
 const authenticateUser = async (req, res) => {
     const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ 'message': 'Email and password are required.' });
+    if (!email && !password) return res.status(400).json({ 'message': 'Email and password are required.' });
     console.log(`email: ${email}, Password: ${password}`)
 
     const foundUser = await Users.findOne({ email: email }).exec();
@@ -33,7 +33,7 @@ const authenticateUser = async (req, res) => {
 
     // send refreshToken with http-only
     res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
-    return res.status(200).json({ 'success': `User ${email} is logged in`, 'accessToken': accessToken})
+    return res.status(200).json({ 'userEmail': `${email}`, 'accessToken': accessToken})
 }
 
 module.exports = { authenticateUser }

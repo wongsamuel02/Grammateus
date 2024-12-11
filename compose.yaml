@@ -20,10 +20,10 @@ services:
       dockerfile: backend.Dockerfile
     ports:
       - "8000:8000"
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
-    command: npx nodemon --legacy-watch app.js
+    # volumes:
+      # - ./backend:/app
+      # - /app/node_modules
+    command: npx nodemon --legacy-watch index.js
     networks:
       - grammateus-network
     env_file:

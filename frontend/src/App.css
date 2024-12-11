@@ -1,12 +1,26 @@
 /* Ensure that the html, body, and root div take up full height */
+:root {
+    --primary-color: #3D72FD;
+    --secondary-color: #CEDCFE;
+    --tertiary-color: #8E92A2;
+    --text-color: #18191D;
+    --background-color: white;
+    --border-color: #F5F5F5;
+}
+
 html, body, #root {
     height: 100%;
+    width: 100%;
+    padding: 0;
     margin: 0;
+    overflow: hidden;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    background-color: var(--background-color);
   }
   
   /* The main container should take up the full viewport */
   .app-container {
-    height: 100%;
+    height: calc(100% - 40px);
     display: flex;
     background-color: #e9ecef; /* Gap color */
   }
