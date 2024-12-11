@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, ListGroup } from 'react-bootstrap';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import PropTypes from 'prop-types';
 
 function SearchBar({ updateSearchSelection }) {
   const [suggestions, setSuggestions] = useState([]);
@@ -91,5 +92,9 @@ function SearchBar({ updateSearchSelection }) {
     </div>
   );
 }
+
+SearchBar.propTypes = {
+  updateSearchSelection: PropTypes.func.isRequired, // Add prop validation
+};
 
 export default SearchBar;
