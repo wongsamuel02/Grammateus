@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setToken(null); // Clear the token on logout
-        setUserEmail(null);
     };
 
     return (

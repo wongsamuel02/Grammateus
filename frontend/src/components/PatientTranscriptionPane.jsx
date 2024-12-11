@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import PropTypes from 'prop-types';
 
 function PatientTranscriptionPane({ patientTranscription, selectedPatient, updateTrigger }) {
   const axiosPrivate = useAxiosPrivate();
@@ -141,42 +142,53 @@ function PatientTranscriptionPane({ patientTranscription, selectedPatient, updat
           </div>
         </div>
       )}
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
+      <style>
+        {`
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
           }
-          to {
-            opacity: 1;
+          @keyframes fadeOut {
+            from {
+              opacity: 1;
+            }
+            to {
+              opacity: 0;
+            }
           }
-        }
-        @keyframes fadeOut {
-          from {
-            opacity: 1;
+          @keyframes zoomIn {
+            from {
+              transform: scale(0.9);
+            }
+            to {
+              transform: scale(1);
+            }
           }
-          to {
-            opacity: 0;
+          @keyframes zoomOut {
+            from {
+              transform: scale(1);
+            }
+            to {
+              transform: scale(0.9);
+            }
           }
-        }
-        @keyframes zoomIn {
-          from {
-            transform: scale(0.9);
-          }
-          to {
-            transform: scale(1);
-          }
-        }
-        @keyframes zoomOut {
-          from {
-            transform: scale(1);
-          }
-          to {
-            transform: scale(0.9);
-          }
-        }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 }
+
+PatientTranscriptionPane.propTypes = {
+  patientTranscription: PropTypes.string.isRequired, // Assuming it's a string, adjust if it's another type
+  selectedPatient: PropTypes.shape({
+    name: PropTypes.string.isRequired, // Assuming `name` is a property, adjust if needed
+    email: PropTypes.string, // Adjust the properties of `selectedPatient` as needed
+  }).isRequired,
+  updateTrigger: PropTypes.bool.isRequired, // Assuming it's a boolean
+};
 
 export default PatientTranscriptionPane;

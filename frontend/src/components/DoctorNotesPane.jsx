@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import PropTypes from 'prop-types';
 
 function DoctorNotesPane( { selectedPatient, doctorEmail, setUpdateTrigger } ) {
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -196,5 +197,13 @@ function DoctorNotesPane( { selectedPatient, doctorEmail, setUpdateTrigger } ) {
     </div>
   );
 }
+
+DoctorNotesPane.propTypes = {
+  selectedPatient: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+  doctorEmail: PropTypes.string.isRequired,
+  setUpdateTrigger: PropTypes.func.isRequired,
+};
 
 export default DoctorNotesPane;
